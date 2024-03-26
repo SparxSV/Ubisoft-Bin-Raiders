@@ -10,3 +10,4 @@ This project has been developed and produced by AIE students for the 2024 Ubisof
  - Stephen - Designer
  - Jasmine - Artist
  - Coby Zala - Artist
+ - Chris - Artist
