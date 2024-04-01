@@ -7,8 +7,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 	[Header("Target Object")]
-	[SerializeField]
-	private Transform targetPos;
+	[SerializeField] private Transform targetPos;
 
 	[Header("Camera Position Settings")]
 	[SerializeField] private float followDistance = 8f;

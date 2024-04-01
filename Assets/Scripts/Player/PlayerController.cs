@@ -3,11 +3,16 @@ using NaughtyAttributes;
 
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
 public class PlayerController : MonoBehaviour
 {
+	[Header("Player Parts")]
+	//[SerializeField] private Transform playerBody;
+	[SerializeField] private Transform playerNormal;
+	[SerializeField] private Rigidbody rigidBody;
+
 	[Header("Movement")] 
 	[SerializeField] private float movementSpeed;
+	[SerializeField] private float dragAmount;
 	
 	[Header("Jump Controls")] 
 	[SerializeField] private float jumpForce;
@@ -26,31 +31,31 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, ReadOnly] private float horizontalMovement;
 	[SerializeField, ReadOnly] private float verticalMovement;
 	
-	private SphereCollider sphereCollider;
-	private Rigidbody rigidBody;
+	private Quaternion normalPosition;
 
-	private void Awake()
-	{
-		jumpActionReference.action.performed += Jump;
-	}
+	private void Awake() => jumpActionReference.action.performed += Jump;
 
 	private void Start()
 	{
-		sphereCollider = GetComponent<SphereCollider>();
-		rigidBody = GetComponent<Rigidbody>();
+		normalPosition = new Quaternion(playerNormal.rotation.x, playerNormal.rotation.y, playerNormal.rotation.z, 0);
+
+		rigidBody.drag = dragAmount;
 
 		readyToJump = true;
 	}
 
 	private void Update()
 	{
+		transform.position = rigidBody.transform.position - new Vector3(0, 0, 0);
+		
 		GetInputs();
 		
-		GroundChecking();
 	}
 
 	private void FixedUpdate()
 	{
+		GroundChecking();
+		
 		Movement();
 	}
 
@@ -60,21 +65,58 @@ public class PlayerController : MonoBehaviour
 		verticalMovement = verticalActionReference.action.ReadValue<float>();
 	}
 
-	private void GroundChecking() => isGrounded = Physics.Raycast(transform.position, Vector3.down, sphereCollider.radius);
+	private void GroundChecking()
+	{
+		if(Physics.Raycast(transform.position + (transform.up * 0.1f), Vector3.down, out RaycastHit hit, rayLength))
+		{
+			playerNormal.up = Vector3.Lerp(playerNormal.up, hit.normal, Time.deltaTime * 8.0f);
+			playerNormal.Rotate(0, transform.eulerAngles.y, 0);
+
+			isGrounded = true;
+		}
+		else
+		{
+			playerNormal.Rotate(normalPosition.x, normalPosition.y, normalPosition.z);
+
+			isGrounded = false;
+		}
+	}
 
 	private void Movement()
 	{
-		if(horizontalMovement > 0 && isGrounded)
+		switch(horizontalMovement)
+		{
+			case -1:
+				Walking(Vector3.left);
+				break;
+			
+			case 1:
+				Walking(Vector3.right);
+				break;
+		}
+
+		switch(verticalMovement)
+		{
+			case -1:
+				Walking(-transform.forward);
+				break;
+			
+			case 1:
+				Walking(transform.forward);
+				break;
+		}
+		
+		/*if(horizontalMovement > 0 && isGrounded)
 			Walking(Vector3.right);
 		
 		if(horizontalMovement < 0 && isGrounded)
-			Walking(Vector3.left);
+			
 		
 		if(verticalMovement > 0 && isGrounded)
 			Walking(Vector3.forward);
 		
 		if(verticalMovement < 0 && isGrounded)
-			Walking(Vector3.back);
+			Walking(Vector3.back);*/
 	}
 	
 	private void Walking(Vector3 _direction)
