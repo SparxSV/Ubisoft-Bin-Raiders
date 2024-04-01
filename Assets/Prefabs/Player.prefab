@@ -210,16 +210,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNormal: {fileID: 8877763101411296196}
   rigidBody: {fileID: 8587883658675685611}
-  movementSpeed: 4
+  sphereCollider: {fileID: 2928320646621523557}
+  movementSpeed: 20
   dragAmount: 0.5
-  jumpForce: 4
+  jumpForce: 12
   jumpCooldown: 1
   horizontalActionReference: {fileID: -6628674834898404500, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   verticalActionReference: {fileID: -2801433893968025475, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   jumpActionReference: {fileID: -3016222003342995615, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   isGrounded: 0
   readyToJump: 0
-  rayLength: 0.6
+  rayLength: 0.65
   horizontalMovement: 0
   verticalMovement: 0
 --- !u!1 &9112344463364887770
@@ -249,7 +250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9112344463364887770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -267,7 +268,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8587883658675685611
 Rigidbody:
@@ -277,10 +278,10 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9112344463364887770}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 2.5
+  m_Drag: 1
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

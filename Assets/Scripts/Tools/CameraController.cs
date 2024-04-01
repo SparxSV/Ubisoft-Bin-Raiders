@@ -26,12 +26,21 @@ public class CameraController : MonoBehaviour
 	{
 		// Get Camera Position
 		cameraPos = GetComponent<Transform>();
-		
+
 		// Get Target Position
 		if(targetPos == null)
 		{
-			NullReferenceException nullCharacter = new NullReferenceException("TargetPos is NULL, please supply targetPos with a valid Transform.");
-			Console.WriteLine(nullCharacter);
+			try
+			{
+				targetPos = FindObjectOfType<PlayerController>().transform;
+			}
+			catch(Exception e)
+			{
+				NullReferenceException nullCharacter = new NullReferenceException("TargetPos is NULL, please supply targetPos with a valid Transform.");
+				Console.WriteLine(nullCharacter);
+
+				throw;
+			}
 		}
 	}
 

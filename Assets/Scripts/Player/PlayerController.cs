@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	//[SerializeField] private Transform playerBody;
 	[SerializeField] private Transform playerNormal;
 	[SerializeField] private Rigidbody rigidBody;
+	[SerializeField] private SphereCollider sphereCollider;
 
 	[Header("Movement")] 
 	[SerializeField] private float movementSpeed;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
 	[Header("Debugging")]
 	[SerializeField, ReadOnly] private bool isGrounded;
 	[SerializeField, ReadOnly] private bool readyToJump;
-	[SerializeField, Range((float)0.5, 1)] private float rayLength;
+	[SerializeField, Range(0.6f, 1)] private float rayLength;
 	
 	[SerializeField, ReadOnly] private float horizontalMovement;
 	[SerializeField, ReadOnly] private float verticalMovement;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		transform.position = rigidBody.transform.position - new Vector3(0, 0, 0);
+		transform.position = rigidBody.transform.position - new Vector3(0, -sphereCollider.radius, 0);
 		
 		GetInputs();
 		
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
 	private void GroundChecking()
 	{
-		if(Physics.Raycast(transform.position + (transform.up * 0.1f), Vector3.down, out RaycastHit hit, rayLength))
+		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayLength))
 		{
 			playerNormal.up = Vector3.Lerp(playerNormal.up, hit.normal, Time.deltaTime * 8.0f);
 			playerNormal.Rotate(0, transform.eulerAngles.y, 0);
@@ -84,44 +85,28 @@ public class PlayerController : MonoBehaviour
 
 	private void Movement()
 	{
-		switch(horizontalMovement)
-		{
-			case -1:
-				Walking(Vector3.left);
-				break;
-			
-			case 1:
-				Walking(Vector3.right);
-				break;
-		}
+		if(horizontalMovement > 0)
+			Walking(transform.right);
 
-		switch(verticalMovement)
-		{
-			case -1:
-				Walking(-transform.forward);
-				break;
-			
-			case 1:
-				Walking(transform.forward);
-				break;
-		}
+		if(horizontalMovement < 0)
+			Walking(-transform.right);
+
+		if(verticalMovement > 0)
+			Walking(transform.forward);
 		
-		/*if(horizontalMovement > 0 && isGrounded)
-			Walking(Vector3.right);
-		
-		if(horizontalMovement < 0 && isGrounded)
-			
-		
-		if(verticalMovement > 0 && isGrounded)
-			Walking(Vector3.forward);
-		
-		if(verticalMovement < 0 && isGrounded)
-			Walking(Vector3.back);*/
+		if(verticalMovement < 0)
+			Walking(-transform.forward);
+
+		else
+			Walking(Vector3.zero);
 	}
 	
 	private void Walking(Vector3 _direction)
 	{
-		rigidBody.AddForce(_direction * movementSpeed);
+		if(isGrounded)
+			rigidBody.AddForce(_direction * movementSpeed);
+		else
+			rigidBody.AddForce(rigidBody.velocity);
 	}
 
 	private void Jump(InputAction.CallbackContext obj)
