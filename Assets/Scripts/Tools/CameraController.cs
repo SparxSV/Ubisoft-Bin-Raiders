@@ -31,16 +31,8 @@ public class CameraController : MonoBehaviour
 		// Get Target Position
 		if(targetPos == null)
 		{
-			try
-			{
-				targetPos = FindObjectOfType<PlayerController>().transform;
-			}
-			catch(Exception e)
-			{
-				Console.WriteLine(e);
-
-				throw;
-			}
+			NullReferenceException nullCharacter = new NullReferenceException("TargetPos is NULL, please supply targetPos with a valid Transform.");
+			Console.WriteLine(nullCharacter);
 		}
 	}
 
