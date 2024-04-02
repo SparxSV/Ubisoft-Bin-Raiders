@@ -1,6 +1,8 @@
 using UnityEngine;
 using NaughtyAttributes;
 
+using System.Collections;
+
 using UnityEngine.InputSystem;
 
 public enum States
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Transform playerNormal;
 	[SerializeField] private Rigidbody rigidBody;
 	[SerializeField] private SphereCollider sphereCollider;
+	[SerializeField] private CustomGravity gravity;
 
 	[Header("Movement")] 
 	[SerializeField, Range(10, 30)] private float movementSpeed;
@@ -33,7 +36,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, ReadOnly] private bool readyToDash;
 
 	[Header("Glide Controls")]
-	[SerializeField, Range(1, 5)] private float glideDuration;
+	[SerializeField] private float glideDuration;
 	[SerializeField] private float glideCooldown;
 	[SerializeField, ReadOnly] private bool readyToGlide;
 
@@ -142,10 +145,18 @@ public class PlayerController : MonoBehaviour
 		{
 			readyToGlide = false;
 			
-			rigidBody.AddForce(Vector3.up * glideDuration, ForceMode.Acceleration);
-			
+			StartCoroutine(GlideTime());
+
 			Invoke(nameof(ResetGlide), glideCooldown);
 		}
+		
+		gravity.gravityScale = 1f;
+	}
+
+	private IEnumerator GlideTime()
+	{
+		gravity.gravityScale = 0.3f;
+		yield return new WaitForSeconds(glideDuration);
 	}
 
 	private void ResetJump() => readyToJump = true;
