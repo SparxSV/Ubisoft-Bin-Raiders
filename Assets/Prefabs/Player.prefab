@@ -211,6 +211,7 @@ MonoBehaviour:
   playerNormal: {fileID: 8877763101411296196}
   rigidBody: {fileID: 8587883658675685611}
   sphereCollider: {fileID: 2928320646621523557}
+  gravity: {fileID: 5766416400267372723}
   movementSpeed: 13
   dragAmount: 1
   jumpForce: 15
@@ -219,7 +220,7 @@ MonoBehaviour:
   dashForce: 12
   dashCooldown: 2
   readyToDash: 0
-  glideDuration: 2
+  glideDuration: 5
   glideCooldown: 2
   readyToGlide: 0
   movementActionReference: {fileID: -6628674834898404500, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
