@@ -36,8 +36,8 @@ public class CameraController : MonoBehaviour
 			}
 			catch(Exception e)
 			{
-				NullReferenceException nullCharacter = new NullReferenceException("TargetPos is NULL, please supply targetPos with a valid Transform.");
-				Console.WriteLine(nullCharacter);
+				e = new NullReferenceException("TargetPos is NULL, please supply targetPos with a valid Transform.");
+				Console.WriteLine(e);
 
 				throw;
 			}
