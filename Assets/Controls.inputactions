@@ -6,27 +6,36 @@
             "id": "a13c9c75-e28b-49b1-936b-34987656c132",
             "actions": [
                 {
-                    "name": "Horizontal Axis Movement",
-                    "type": "Button",
+                    "name": "Movement",
+                    "type": "Value",
                     "id": "2210782f-930d-4088-8206-e0dcf5863a5b",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Vertical Axis Movement",
-                    "type": "Button",
-                    "id": "c63d2497-406a-4d2d-9562-35ca5431e628",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jumping",
                     "type": "Button",
                     "id": "373b782e-69e2-45eb-8616-0284fee34ad7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gliding",
+                    "type": "Button",
+                    "id": "83b37d39-efa2-4a60-a3db-e0f0e988e1c3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "d0cae1a0-7205-475f-843e-1cbfbe52a03a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -46,68 +55,79 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "88e0520c-9800-4bcf-9ba1-9cd51237e575",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "2862767a-5c85-4fbf-af0c-982b2fec3ca4",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Horizontal Axis Movement",
+                    "action": "Gliding",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f16aadda-f02f-40cb-9c30-01273707a61e",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "c96c78c5-d667-4631-8d30-0d377c9651cd",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "168ae14d-6944-499d-81ec-2e501f79bb86",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Horizontal Axis Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "e66bc1b1-ec7f-41a2-a3f6-031dc915e8bd",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Horizontal Axis Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "fbd5d4f1-1cdb-454a-a516-22c2ae64406c",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Vertical Axis Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "cb7b7647-ca0e-48f2-9868-5bf5df0fc1e3",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Vertical Axis Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "14e5c527-21bd-47f0-98e5-ae9fd77843f4",
+                    "name": "up",
+                    "id": "5e82e0d8-aeed-498d-b308-2d2342529292",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Vertical Axis Movement",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "18595092-7c83-4fd4-aa5a-3aea85e7d17a",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "eb4ff9e9-74da-49d2-aab1-6c8992e1f4f6",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "b25f024c-b25c-4fb3-a2ed-e0f3ee36e75c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

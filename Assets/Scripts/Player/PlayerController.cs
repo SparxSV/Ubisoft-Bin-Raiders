@@ -3,38 +3,60 @@ using NaughtyAttributes;
 
 using UnityEngine.InputSystem;
 
+public enum States
+{
+	Walking,
+	OffGround,
+	Gliding,
+	Dashing
+}
+
 public class PlayerController : MonoBehaviour
 {
 	[Header("Player Parts")]
-	//[SerializeField] private Transform playerBody;
 	[SerializeField] private Transform playerNormal;
 	[SerializeField] private Rigidbody rigidBody;
 	[SerializeField] private SphereCollider sphereCollider;
 
 	[Header("Movement")] 
-	[SerializeField] private float movementSpeed;
+	[SerializeField, Range(10, 30)] private float movementSpeed;
 	[SerializeField] private float dragAmount;
 	
 	[Header("Jump Controls")] 
-	[SerializeField] private float jumpForce;
+	[SerializeField, Range(5, 30)] private float jumpForce;
 	[SerializeField] private float jumpCooldown;
-	
-	[Header("Input Actions")]
-	[SerializeField] private InputActionReference horizontalActionReference;
-	[SerializeField] private InputActionReference verticalActionReference;
-	[SerializeField] private InputActionReference jumpActionReference;
-
-	[Header("Debugging")]
-	[SerializeField, ReadOnly] private bool isGrounded;
 	[SerializeField, ReadOnly] private bool readyToJump;
+
+	[Header("Dash Controls")]
+	[SerializeField, Range(10, 40)] private float dashForce;
+	[SerializeField] private float dashCooldown;
+	[SerializeField, ReadOnly] private bool readyToDash;
+
+	[Header("Glide Controls")]
+	[SerializeField, Range(1, 5)] private float glideDuration;
+	[SerializeField] private float glideCooldown;
+	[SerializeField, ReadOnly] private bool readyToGlide;
+
+	[Header("Input Actions")]
+	[SerializeField] private InputActionReference movementActionReference;
+	[SerializeField] private InputActionReference jumpActionReference;
+	[SerializeField] private InputActionReference glideActionReference;
+	[SerializeField] private InputActionReference dashActionReference;
+	
+	[Header("Debugging")]
 	[SerializeField, Range(0.6f, 1)] private float rayLength;
-	
-	[SerializeField, ReadOnly] private float horizontalMovement;
-	[SerializeField, ReadOnly] private float verticalMovement;
-	
+	[SerializeField, ReadOnly] private bool isGrounded;
+	[SerializeField, ReadOnly] private Vector2 movement;
+
+	private Vector3 currentDirection;
 	private Quaternion normalPosition;
 
-	private void Awake() => jumpActionReference.action.performed += Jump;
+	private void Awake()
+	{
+		jumpActionReference.action.performed += Jump;
+		dashActionReference.action.performed += Dash;
+		glideActionReference.action.performed += Glide;
+	}
 
 	private void Start()
 	{
@@ -43,29 +65,21 @@ public class PlayerController : MonoBehaviour
 		rigidBody.drag = dragAmount;
 
 		readyToJump = true;
+		readyToGlide = true;
+		readyToDash = true;
 	}
 
 	private void Update()
 	{
 		transform.position = rigidBody.transform.position - new Vector3(0, -sphereCollider.radius, 0);
-		
-		GetInputs();
-		
-	}
 
-	private void FixedUpdate()
-	{
 		GroundChecking();
 		
-		Movement();
+		GetInputs();
 	}
-
-	private void GetInputs()
-	{
-		horizontalMovement = horizontalActionReference.action.ReadValue<float>();
-		verticalMovement = verticalActionReference.action.ReadValue<float>();
-	}
-
+	
+	private void FixedUpdate() => Movement();
+	
 	private void GroundChecking()
 	{
 		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayLength))
@@ -83,28 +97,16 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	#region Input Functions
+
+	private void GetInputs() => movement = movementActionReference.action.ReadValue<Vector2>();
+
 	private void Movement()
 	{
-		if(horizontalMovement > 0)
-			Walking(transform.right);
+		currentDirection = new Vector3(transform.right.x * movement.x, 0, transform.forward.z * movement.y);
 
-		if(horizontalMovement < 0)
-			Walking(-transform.right);
-
-		if(verticalMovement > 0)
-			Walking(transform.forward);
-		
-		if(verticalMovement < 0)
-			Walking(-transform.forward);
-
-		else
-			Walking(Vector3.zero);
-	}
-	
-	private void Walking(Vector3 _direction)
-	{
 		if(isGrounded)
-			rigidBody.AddForce(_direction * movementSpeed);
+			rigidBody.AddForce(currentDirection * movementSpeed, ForceMode.Acceleration);
 		else
 			rigidBody.AddForce(rigidBody.velocity);
 	}
@@ -121,25 +123,56 @@ public class PlayerController : MonoBehaviour
 			Invoke(nameof(ResetJump), jumpCooldown);
 		}
 	}
+	
+	private void Dash(InputAction.CallbackContext obj)
+	{
+		if(readyToDash)
+		{
+			readyToDash = false;
+			
+			rigidBody.AddForce(currentDirection * dashForce, ForceMode.Impulse);
+			
+			Invoke(nameof(ResetDash), dashCooldown);
+		}
+	}
+	
+	private void Glide(InputAction.CallbackContext obj)
+	{
+		if(!isGrounded && readyToGlide && obj.duration > 0.4f)
+		{
+			readyToGlide = false;
+			
+			rigidBody.AddForce(Vector3.up * glideDuration, ForceMode.Acceleration);
+			
+			Invoke(nameof(ResetGlide), glideCooldown);
+		}
+	}
 
 	private void ResetJump() => readyToJump = true;
 
+	private void ResetGlide() => readyToGlide = true;
+
+	private void ResetDash() => readyToDash = true;
+	
 	private void OnEnable()
 	{
-		horizontalActionReference.action.Enable();
-		verticalActionReference.action.Enable();
+		movementActionReference.action.Enable();
 		
 		jumpActionReference.action.Enable();
+		glideActionReference.action.Enable();
+		dashActionReference.action.Enable();
 	}
-
 
 	private void OnDisable()
 	{
-		horizontalActionReference.action.Disable();
-		verticalActionReference.action.Disable();
+		movementActionReference.action.Disable();		
 		
 		jumpActionReference.action.Disable();
+		glideActionReference.action.Disable();
+		dashActionReference.action.Disable();
 	}
+	
+#endregion
 
 	private void OnDrawGizmos()
 	{

@@ -6,21 +6,23 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-	[Header("Target Object")]
-	[SerializeField] private Transform targetPos;
-
 	[Header("Camera Position Settings")]
 	[SerializeField] private float followDistance = 8f;
 	[SerializeField] private float elevationAngle = 6f;
-	[SerializeField] private float orbitalAngle = 0f;
+
+	[Header("Camera Angle Settings")]
+	[SerializeField] private bool useOrbitalAngle;
+	[SerializeField, EnableIf("useOrbitalAngle")] private float orbitalAngle;
 
 	[Header("Camera Smoothing Settings")]
 	[SerializeField] private bool isMovementSmoothing = true;
 	[SerializeField] private bool isRotationSmoothing = true;
 	[SerializeField, EnableIf("isRotationSmoothing")] private float rotationSmoothing;
 
-	private Vector3 desiredPosition;
+	private Transform targetPos;
 	private Transform cameraPos;
+	
+	private Vector3 desiredPosition;
 
 	private void Start()
 	{

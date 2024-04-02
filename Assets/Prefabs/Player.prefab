@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4048299001638715885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -211,18 +211,24 @@ MonoBehaviour:
   playerNormal: {fileID: 8877763101411296196}
   rigidBody: {fileID: 8587883658675685611}
   sphereCollider: {fileID: 2928320646621523557}
-  movementSpeed: 20
-  dragAmount: 0.5
-  jumpForce: 12
-  jumpCooldown: 1
-  horizontalActionReference: {fileID: -6628674834898404500, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
-  verticalActionReference: {fileID: -2801433893968025475, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
-  jumpActionReference: {fileID: -3016222003342995615, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
-  isGrounded: 0
+  movementSpeed: 13
+  dragAmount: 1
+  jumpForce: 15
+  jumpCooldown: 0.5
   readyToJump: 0
+  dashForce: 12
+  dashCooldown: 2
+  readyToDash: 0
+  glideDuration: 2
+  glideCooldown: 2
+  readyToGlide: 0
+  movementActionReference: {fileID: -6628674834898404500, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  jumpActionReference: {fileID: -3016222003342995615, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  glideActionReference: {fileID: 5483882392771179933, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  dashActionReference: {fileID: 2293916498910788693, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   rayLength: 0.65
-  horizontalMovement: 0
-  verticalMovement: 0
+  isGrounded: 0
+  movement: {x: 0, y: 0}
 --- !u!1 &9112344463364887770
 GameObject:
   m_ObjectHideFlags: 0
