@@ -114,26 +114,43 @@ MonoBehaviour:
   rigidBody: {fileID: 8587883658675685611}
   sphereCollider: {fileID: 2928320646621523557}
   gravity: {fileID: 5766416400267372723}
-  movementSpeed: 13
-  turnSpeed: 2
-  dragAmount: 1
+  movementSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1000
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  turnSpeed: 200
+  currentSpeed: 0
   jumpForce: 15
-  jumpCooldown: 0.5
-  readyToJump: 0
   dashForce: 12
   dashCooldown: 2
   readyToDash: 0
-  glideDuration: 5
-  glideCooldown: 2
-  readyToGlide: 0
+  movementInput: {fileID: 0}
   movementActionReference: {fileID: -6628674834898404500, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   jumpActionReference: {fileID: -3016222003342995615, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   glideActionReference: {fileID: 5483882392771179933, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   dashActionReference: {fileID: 2293916498910788693, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   rayLength: 0.65
   isGrounded: 0
-  movement: {x: 0, y: 0}
-  glide: 0
 --- !u!1 &9112344463364887770
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private CustomGravity gravity;
 
 	[Header("Movement")] 
-	[SerializeField, Range(10, 30)] private float movementSpeed;
+	[SerializeField] private AnimationCurve movementSpeed;
+	[SerializeField] private float turnSpeed;
+	[SerializeField, ReadOnly] private float currentSpeed;
 	
 	[Header("Jump Controls")] 
 	[SerializeField, Range(5, 30)] private float jumpForce;
@@ -32,11 +34,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, Range(10, 40)] private float dashForce;
 	[SerializeField] private float dashCooldown;
 	[SerializeField, ReadOnly] private bool readyToDash;
-
-	[Header("Glide Controls")]
-	[SerializeField] private float glideDuration;
-	[SerializeField] private float glideCooldown;
-	[SerializeField, ReadOnly] private bool readyToGlide;
 
 	[Header("Input Actions")]
 	[SerializeField] private InputActionReference movementActionReference;
@@ -47,10 +44,6 @@ public class PlayerController : MonoBehaviour
 	[Header("Debugging")]
 	[SerializeField, Range(0.6f, 1)] private float rayLength;
 	[SerializeField, ReadOnly] private bool isGrounded;
-	[SerializeField, ReadOnly] private Vector2 movement;
-	[SerializeField, ReadOnly] private float glide;
-
-	private Vector3 forceDirection = Vector3.zero;
 
 	private Quaternion normalPosition;
 
@@ -64,16 +57,15 @@ public class PlayerController : MonoBehaviour
 	{
 		rigidBody.drag = 1;
 
-		readyToJump = true;
-		readyToGlide = true;
 		readyToDash = true;
 	}
 
 	private void Update()
 	{
 		transform.position = rigidBody.transform.position - new Vector3(0, -sphereCollider.radius, 0);
+		currentSpeed = rigidBody.velocity.magnitude;
 		
-		GetInputs();
+		GroundCheck();
 	}
 
     private void FixedUpdate()
@@ -82,34 +74,39 @@ public class PlayerController : MonoBehaviour
 		Glide();
     }
 
-    private bool IsGrounded()
-    {
+	private void GroundCheck()
+	{
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayLength))
         {
             playerNormal.up = Vector3.Lerp(playerNormal.up, hit.normal, Time.deltaTime * 8.0f);
             playerNormal.Rotate(0, transform.eulerAngles.y, 0);
 
-            return true;
+            isGrounded = true;
         }
         else
-            return false;
-    }
+            isGrounded = false;
+
+	}
 
     #region Input Functions
 
-    private void GetInputs()
-    {
-        movement = movementActionReference.action.ReadValue<Vector2>();
-		glide = glideActionReference.action.ReadValue<float>();
-    }
-
     private void Movement()
 	{
+		Vector2 movement = movementActionReference.action.ReadValue<Vector2>();
+		transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * movement.x);
+
+		float speed = movementSpeed.Evaluate(movement.y);
+
+		if (isGrounded)
+			rigidBody.AddForce(transform.forward * Time.deltaTime * speed * movement.y, ForceMode.Acceleration);
+
+		else
+			rigidBody.AddForce(Vector3.zero * Time.deltaTime * movement.y);
 	}
 
 	private void Glide()
 	{
-		if (!isGrounded && glide > 0)
+		if (!isGrounded && glideActionReference.action.ReadValue<float>() > 0)
 			gravity.gravityScale = 0.1f;
 		
 		else
@@ -118,10 +115,10 @@ public class PlayerController : MonoBehaviour
 
 	private void Jump(InputAction.CallbackContext obj)
 	{
-		if(IsGrounded())
+		if(isGrounded)
 		{
-			//rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
-			forceDirection += Vector3.up * jumpForce;
+			rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+			rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 		}
 	}
 
@@ -131,15 +128,11 @@ public class PlayerController : MonoBehaviour
 		{
 			readyToDash = false;
 			
-			rigidBody.AddForce(forceDirection * dashForce, ForceMode.Impulse);
+			rigidBody.AddForce(transform.forward * dashForce, ForceMode.Impulse);
 			
 			Invoke(nameof(ResetDash), dashCooldown);
 		}
 	}
-
-	private void ResetJump() => readyToJump = true;
-
-	private void ResetGlide() => readyToGlide = true;
 
 	private void ResetDash() => readyToDash = true;
 	
