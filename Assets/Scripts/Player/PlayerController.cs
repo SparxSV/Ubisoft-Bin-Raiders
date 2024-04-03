@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
 	[Header("Jump Controls")] 
 	[SerializeField, Range(5, 30)] private float jumpForce;
 
+	[Header("Glide Controls")]
+	[SerializeField, Range(0, 1)] private float glideStrength;
+
 	[Header("Dash Controls")]
 	[SerializeField, Range(10, 40)] private float dashForce;
 	[SerializeField] private float dashCooldown;
@@ -107,7 +110,7 @@ public class PlayerController : MonoBehaviour
 	private void Glide()
 	{
 		if (!isGrounded && glideActionReference.action.ReadValue<float>() > 0)
-			gravity.gravityScale = 0.1f;
+			gravity.gravityScale = glideStrength;
 		
 		else
 			gravity.gravityScale = 1f;
