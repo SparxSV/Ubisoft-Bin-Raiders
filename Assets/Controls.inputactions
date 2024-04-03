@@ -29,7 +29,7 @@
                     "id": "83b37d39-efa2-4a60-a3db-e0f0e988e1c3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -57,7 +57,7 @@
                 {
                     "name": "",
                     "id": "2862767a-5c85-4fbf-af0c-982b2fec3ca4",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -77,7 +77,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "WASD",
                     "id": "c96c78c5-d667-4631-8d30-0d377c9651cd",
                     "path": "2DVector",
                     "interactions": "",

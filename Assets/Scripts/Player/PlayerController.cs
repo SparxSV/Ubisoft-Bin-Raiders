@@ -4,6 +4,7 @@ using NaughtyAttributes;
 using System.Collections;
 
 using UnityEngine.InputSystem;
+using System;
 
 public enum States
 {
@@ -23,12 +24,9 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Movement")] 
 	[SerializeField, Range(10, 30)] private float movementSpeed;
-	[SerializeField] private float dragAmount;
 	
 	[Header("Jump Controls")] 
 	[SerializeField, Range(5, 30)] private float jumpForce;
-	[SerializeField] private float jumpCooldown;
-	[SerializeField, ReadOnly] private bool readyToJump;
 
 	[Header("Dash Controls")]
 	[SerializeField, Range(10, 40)] private float dashForce;
@@ -50,22 +48,21 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, Range(0.6f, 1)] private float rayLength;
 	[SerializeField, ReadOnly] private bool isGrounded;
 	[SerializeField, ReadOnly] private Vector2 movement;
+	[SerializeField, ReadOnly] private float glide;
 
-	private Vector3 currentDirection;
+	private Vector3 forceDirection = Vector3.zero;
+
 	private Quaternion normalPosition;
 
 	private void Awake()
 	{
 		jumpActionReference.action.performed += Jump;
 		dashActionReference.action.performed += Dash;
-		glideActionReference.action.performed += Glide;
 	}
 
 	private void Start()
 	{
-		normalPosition = new Quaternion(playerNormal.rotation.x, playerNormal.rotation.y, playerNormal.rotation.z, 0);
-
-		rigidBody.drag = dragAmount;
+		rigidBody.drag = 1;
 
 		readyToJump = true;
 		readyToGlide = true;
@@ -75,88 +72,69 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		transform.position = rigidBody.transform.position - new Vector3(0, -sphereCollider.radius, 0);
-
-		GroundChecking();
 		
 		GetInputs();
 	}
-	
-	private void FixedUpdate() => Movement();
-	
-	private void GroundChecking()
+
+    private void FixedUpdate()
+    {
+        Movement();
+		Glide();
+    }
+
+    private bool IsGrounded()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayLength))
+        {
+            playerNormal.up = Vector3.Lerp(playerNormal.up, hit.normal, Time.deltaTime * 8.0f);
+            playerNormal.Rotate(0, transform.eulerAngles.y, 0);
+
+            return true;
+        }
+        else
+            return false;
+    }
+
+    #region Input Functions
+
+    private void GetInputs()
+    {
+        movement = movementActionReference.action.ReadValue<Vector2>();
+		glide = glideActionReference.action.ReadValue<float>();
+    }
+
+    private void Movement()
 	{
-		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayLength))
-		{
-			playerNormal.up = Vector3.Lerp(playerNormal.up, hit.normal, Time.deltaTime * 8.0f);
-			playerNormal.Rotate(0, transform.eulerAngles.y, 0);
-
-			isGrounded = true;
-		}
-		else
-		{
-			playerNormal.Rotate(normalPosition.x, normalPosition.y, normalPosition.z);
-
-			isGrounded = false;
-		}
 	}
 
-	#region Input Functions
-
-	private void GetInputs() => movement = movementActionReference.action.ReadValue<Vector2>();
-
-	private void Movement()
+	private void Glide()
 	{
-		currentDirection = new Vector3(transform.right.x * movement.x, 0, transform.forward.z * movement.y);
-
-		if(isGrounded)
-			rigidBody.AddForce(currentDirection * movementSpeed, ForceMode.Acceleration);
+		if (!isGrounded && glide > 0)
+			gravity.gravityScale = 0.1f;
+		
 		else
-			rigidBody.AddForce(rigidBody.velocity);
+			gravity.gravityScale = 1f;
 	}
 
 	private void Jump(InputAction.CallbackContext obj)
 	{
-		if(isGrounded && readyToJump)
+		if(IsGrounded())
 		{
-			readyToJump = false;
-
-			rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
-			rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-			
-			Invoke(nameof(ResetJump), jumpCooldown);
+			//rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+			forceDirection += Vector3.up * jumpForce;
 		}
 	}
-	
-	private void Dash(InputAction.CallbackContext obj)
+
+    private void Dash(InputAction.CallbackContext obj)
 	{
 		if(readyToDash)
 		{
 			readyToDash = false;
 			
-			rigidBody.AddForce(currentDirection * dashForce, ForceMode.Impulse);
+			rigidBody.AddForce(forceDirection * dashForce, ForceMode.Impulse);
 			
 			Invoke(nameof(ResetDash), dashCooldown);
 		}
-	}
-	
-	private void Glide(InputAction.CallbackContext obj)
-	{
-		if(!isGrounded && readyToGlide && obj.duration > 0.4f)
-		{
-			readyToGlide = false;
-			
-			StartCoroutine(GlideTime());
-
-			Invoke(nameof(ResetGlide), glideCooldown);
-		}
-		
-		gravity.gravityScale = 1f;
-	}
-
-	private IEnumerator GlideTime()
-	{
-		gravity.gravityScale = 0.3f;
-		yield return new WaitForSeconds(glideDuration);
 	}
 
 	private void ResetJump() => readyToJump = true;
