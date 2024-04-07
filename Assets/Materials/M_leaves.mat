@@ -51,10 +51,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClipping: 0.5
+    - _AlphaClipping: 0.1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _WindSpeed: 0.5
+    - _WindStrength: 0.2
     m_Colors:
     - _Inside: {r: 0, g: 0.6886792, b: 0.060020402, a: 0}
     - _Outside: {r: 0, g: 0.31132078, b: 0.03253289, a: 0}
+    - _WindDirection: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
