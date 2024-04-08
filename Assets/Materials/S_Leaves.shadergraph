@@ -1367,7 +1367,7 @@
         "convert"
     ],
     "m_Precision": 0,
-    "m_PreviewExpanded": true,
+    "m_PreviewExpanded": false,
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
@@ -1566,7 +1566,7 @@
         "plus"
     ],
     "m_Precision": 0,
-    "m_PreviewExpanded": true,
+    "m_PreviewExpanded": false,
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
@@ -2992,10 +2992,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1072.0,
+            "x": -1111.0,
             "y": -71.0000228881836,
-            "width": 147.0,
-            "height": 34.000003814697269
+            "width": 146.99993896484376,
+            "height": 34.00001907348633
         }
     },
     "m_Slots": [
@@ -3796,10 +3796,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -735.0,
-            "y": 320.0000305175781,
+            "x": -468.99993896484377,
+            "y": 260.0,
             "width": 205.99993896484376,
-            "height": 131.00003051757813
+            "height": 131.0
         }
     },
     "m_Slots": [
