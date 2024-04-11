@@ -1,8 +1,12 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    public List<EnemyAI> enemies;
 
     private void Awake()
     {
@@ -12,8 +16,11 @@ public class GameManager : MonoBehaviour
             Instance = this;
     }
 
-    private void Start()
+    private void Update()
     {
-        
+        foreach(EnemyAI enemy in enemies)
+        {
+            
+        }
     }
 }

@@ -1,5 +1,7 @@
 using NaughtyAttributes;
 
+using System;
+
 using UnityEngine;
 
 using UnityEngine.AI;
@@ -15,6 +17,12 @@ public enum EnemyStates
 
 public class EnemyAI : MonoBehaviour
 {
+	public float Health
+	{
+		get => health;
+		set => health = value;
+	}
+
 	[Header("Enemy Settings")]
 	[SerializeField] private float health;
 	[SerializeField] private LayerMask whatIsGround;
@@ -46,6 +54,13 @@ public class EnemyAI : MonoBehaviour
 	{
 		player = FindObjectOfType<PlayerController>().transform;
 		agent = GetComponent<NavMeshAgent>();
+
+		gameObject.layer = 9;
+	}
+
+	private void Start()
+	{
+		GameManager.Instance.enemies.Add(this);
 	}
 
 	private void Update()
