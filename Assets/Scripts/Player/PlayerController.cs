@@ -1,10 +1,8 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-using System.Collections;
-
 using UnityEngine.InputSystem;
-using System;
+using UnityEngine.ProBuilder;
 
 public enum States
 {
@@ -21,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Rigidbody rigidBody;
 	[SerializeField] private SphereCollider sphereCollider;
 	[SerializeField] private CustomGravity gravity;
+	[SerializeField] private Animator animator;
 
 	[Header("Movement")] 
 	[SerializeField] private AnimationCurve movementSpeed;
@@ -48,6 +47,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, Range(0.6f, 1)] private float rayLength;
 	[SerializeField, ReadOnly] private bool isGrounded;
 
+	private Vector2 movement;
+	
+	private static readonly int forward = Animator.StringToHash("Forward");
+	private static readonly int sense = Animator.StringToHash("Sense");
+	private static readonly int turn = Animator.StringToHash("Turn");
+
 	private Quaternion normalPosition;
 
 	private void Awake()
@@ -65,13 +70,17 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		transform.position = rigidBody.transform.position - new Vector3(0, -sphereCollider.radius, 0);
+		transform.position = rigidBody.transform.position - new Vector3(0, /*-sphereCollider.radius*/0, 0);
 		currentSpeed = rigidBody.velocity.magnitude;
+
+		movement = movementActionReference.action.ReadValue<Vector2>();
 		
 		GroundCheck();
+
+		Animations();
 	}
 
-    private void FixedUpdate()
+	private void FixedUpdate()
     {
         Movement();
 		Glide();
@@ -88,23 +97,29 @@ public class PlayerController : MonoBehaviour
         }
         else
             isGrounded = false;
-
+	}
+	
+	private void Animations()
+	{
+		animator.SetFloat(forward, Mathf.Abs(movement.y));
+		animator.SetFloat(sense, Mathf.Sign(movement.y));
+		
+		animator.SetFloat(turn, movement.x);
 	}
 
     #region Input Functions
 
     private void Movement()
 	{
-		Vector2 movement = movementActionReference.action.ReadValue<Vector2>();
-		transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * movement.x);
+		transform.Rotate(Vector3.up * (Time.deltaTime * turnSpeed * movement.x));
 
 		float speed = movementSpeed.Evaluate(movement.y);
 
 		if (isGrounded)
-			rigidBody.AddForce(transform.forward * Time.deltaTime * speed * movement.y, ForceMode.Acceleration);
+			rigidBody.AddForce(transform.forward * (Time.deltaTime * speed * movement.y), ForceMode.Acceleration);
 
 		else
-			rigidBody.AddForce(Vector3.zero * Time.deltaTime * movement.y);
+			rigidBody.AddForce(Vector3.zero * (Time.deltaTime * movement.y));
 	}
 
 	private void Glide()

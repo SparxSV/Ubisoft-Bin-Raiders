@@ -6,14 +6,19 @@ using UnityEngine.AI;
 
 using Random = UnityEngine.Random;
 
+public enum EnemyStates
+{
+	Patrolling,
+	Chasing,
+	Attacking
+}
+
 public class EnemyAI : MonoBehaviour
 {
-	[SerializeField] private NavMeshAgent agent;
-	
+	[Header("Enemy Settings")]
+	[SerializeField] private float health;
 	[SerializeField] private LayerMask whatIsGround;
 	[SerializeField] private LayerMask whatIsPlayer;
-
-	[SerializeField] private float health;
 	
 	// Patrolling
 	[SerializeField] private Vector3 walkPoint;
@@ -28,8 +33,11 @@ public class EnemyAI : MonoBehaviour
 	// States
 	[SerializeField] private float sightRange, attackRange;
 	[SerializeField] private bool playerInSightRange, playerInAttackRange;
-	
-	[SerializeField, ReadOnly]private Transform player;
+
+	[Header("Debugging")]
+	[SerializeField, ReadOnly] private EnemyStates currentState;
+	[SerializeField, ReadOnly] private NavMeshAgent agent;
+	[SerializeField, ReadOnly] private Transform player;
 
 	private bool walkPointSet;
 	private bool alreadyAttacked;
@@ -58,6 +66,8 @@ public class EnemyAI : MonoBehaviour
 
 	private void Patrolling()
 	{
+		currentState = EnemyStates.Patrolling;
+		
 		if(!walkPointSet) SearchWalkPoint();
 
 		if(walkPointSet)
@@ -84,12 +94,16 @@ public class EnemyAI : MonoBehaviour
 
 	private void ChasePlayer()
 	{
+		currentState = EnemyStates.Chasing;
+		
 		agent.SetDestination(player.position);
 	}
 
 	// ReSharper disable Unity.PerformanceAnalysis
 	private void AttackPlayer()
 	{
+		currentState = EnemyStates.Attacking;
+		
 		// Make sure enemy doesn't move
 		agent.SetDestination(transform.position);
 		
