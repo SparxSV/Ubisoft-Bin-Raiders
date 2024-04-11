@@ -100,10 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 8
   elevationAngle: 30
-  useOrbitalAngle: 0
-  orbitalAngle: 40
+  useOrbitalAngle: 1
+  orbitalAngle: 0
   isMovementSmoothing: 1
-  isRotationSmoothing: 1
+  isRotationSmoothing: 0
   rotationSmoothing: 10
 --- !u!114 &5050407634981888298
 MonoBehaviour:

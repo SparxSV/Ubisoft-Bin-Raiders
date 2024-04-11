@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
@@ -23,8 +21,9 @@ public class KillZone : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.layer == 6)
-		{
 			other.transform.position = new Vector3(entityRespawnPosition.position.x, entityRespawnPosition.position.y + 1, entityRespawnPosition.position.z);
-		}
+		
+		if(other.gameObject.layer == 8)
+			Destroy(other.gameObject);
 	}
 }
