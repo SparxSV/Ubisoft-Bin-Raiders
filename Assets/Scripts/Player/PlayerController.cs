@@ -1,10 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-using UnityEditorInternal;
-
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder;
 
 public enum States
 {
