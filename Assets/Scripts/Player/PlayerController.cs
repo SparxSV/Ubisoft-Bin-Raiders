@@ -1,10 +1,6 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-using System;
-
-using Unity.VisualScripting;
-
 using UnityEngine.InputSystem;
 
 public enum States
@@ -30,17 +26,12 @@ public class PlayerController : MonoBehaviour
 	[Header("Movement")] 
 	[SerializeField] private AnimationCurve movementSpeed;
 	[SerializeField] private float turnSpeed;
-	[SerializeField, ReadOnly] private float currentSpeed;
 	
 	[Header("Jump Controls")] 
 	[SerializeField, Range(5, 30)] private float jumpForce;
 	[SerializeField, ReadOnly] private bool readyToJump;
 	[SerializeField, Range(0, 10)] private float jumpCooldown;
 
-	[Header("Attack Controls")]
-	[SerializeField, Range(0, 10)] private float attackCooldown;
-	[SerializeField, ReadOnly] private bool readyToAttack;
-	
 	[Header("Glide Controls")]
 	[SerializeField, Range(0, 1)] private float glideStrength;
 
@@ -54,7 +45,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private InputActionReference jumpActionReference;
 	[SerializeField] private InputActionReference glideActionReference;
 	[SerializeField] private InputActionReference dashActionReference;
-	[SerializeField] private InputActionReference slashActionReference;
 	
 	[Header("Debugging")]
 	[SerializeField, Range(0.6f, 1)] private float rayLength;
@@ -67,7 +57,6 @@ public class PlayerController : MonoBehaviour
 	{
 		jumpActionReference.action.performed += Jump;
 		dashActionReference.action.performed += Dash;
-		slashActionReference.action.performed += SwordAttack;
 	}
 
 	private void Start()
@@ -81,7 +70,6 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		transform.position = rigidBody.transform.position - new Vector3(0, /*-sphereCollider.radius*/0.25f, 0);
-		currentSpeed = rigidBody.velocity.magnitude;
 
 		movement = movementActionReference.action.ReadValue<Vector2>();
 		
@@ -114,10 +102,12 @@ public class PlayerController : MonoBehaviour
 		animator.SetFloat("Forward", movement.y);
 		animator.SetFloat("Turn", movement.x);
 		
-		if(!isGrounded)
+		animator.SetBool("Grounded", !isGrounded);
+		
+		/*if(!isGrounded)
 			animator.SetBool("Grounded", true);
 		else
-			animator.SetBool("Grounded", false);
+			animator.SetBool("Grounded", false);*/
 	}
 
     #region Input Functions
@@ -160,11 +150,6 @@ public class PlayerController : MonoBehaviour
 			
 			Invoke(nameof(ResetJump), jumpCooldown);
 		}
-	}
-	
-	private void SwordAttack(InputAction.CallbackContext obj)
-	{
-		
 	}
 
 	private void ResetJump()

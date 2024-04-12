@@ -1,7 +1,5 @@
 using NaughtyAttributes;
 
-using System;
-
 using UnityEngine;
 
 using UnityEngine.AI;
@@ -17,14 +15,7 @@ public enum EnemyStates
 
 public class EnemyAI : MonoBehaviour
 {
-	public float Health
-	{
-		get => health;
-		set => health = value;
-	}
-
 	[Header("Enemy Settings")]
-	[SerializeField] private float health;
 	[SerializeField] private LayerMask whatIsGround;
 	[SerializeField] private LayerMask whatIsPlayer;
 	
@@ -140,14 +131,6 @@ public class EnemyAI : MonoBehaviour
 	}
 
 	private void ResetAttack() => alreadyAttacked = false;
-
-	public void TakeDamage(int _damage)
-	{
-		health -= _damage;
-		
-		if(health <= 0)
-			Invoke(nameof(DestroyEnemy), 0.5f);
-	}
 
 	private void DestroyEnemy() => Destroy(gameObject);
 
