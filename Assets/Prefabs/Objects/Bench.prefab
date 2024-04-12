@@ -102,6 +102,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bench
       objectReference: {fileID: 0}
+    - target: {fileID: 8217514168128453796, guid: 69a4c1bd76ec9b145844788bdcf35bd3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 37160c88016f8b64ea044ec714e94846, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69a4c1bd76ec9b145844788bdcf35bd3, type: 3}
 --- !u!4 &6507263430928061454 stripped
