@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027786388157573873}
+  - component: {fileID: 8250953726027101144}
   m_Layer: 0
   m_Name: FenceMod1
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8250953726027101144
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7164449261600849166}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5397141, y: 1.9397893, z: 0.1483393}
+  m_Center: {x: 0.0892289, y: 0.9629903, z: -0.017708361}
 --- !u!1001 &3680361121084933921
 PrefabInstance:
   m_ObjectHideFlags: 0
