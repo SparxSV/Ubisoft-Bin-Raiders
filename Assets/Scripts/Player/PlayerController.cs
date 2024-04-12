@@ -2,6 +2,7 @@ using UnityEngine;
 using NaughtyAttributes;
 
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public enum States
 {
@@ -19,6 +20,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private SphereCollider sphereCollider;
 	[SerializeField] private CustomGravity gravity;
 	[SerializeField] private Animator animator;
+
+	[SerializeField] private VisualEffectAsset dashVFX;
+	[SerializeField] private VisualEffectAsset walkVFX;
 
 	[Header("Player Stats")] 
 	public int playerHealth = 3;
@@ -117,6 +121,7 @@ public class PlayerController : MonoBehaviour
 		transform.Rotate(Vector3.up * (Time.deltaTime * turnSpeed * movement.x));
 
 		float speed = movementSpeed.Evaluate(movement.y);
+		
 
 		if(isGrounded)
 		{
