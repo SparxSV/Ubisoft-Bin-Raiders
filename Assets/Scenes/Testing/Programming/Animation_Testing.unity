@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028362, g: 0.22571445, b: 0.30692273, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -731,14 +731,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077213426}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.42247343, y: 0.023724351, z: -0.011062846, w: 0.9059973}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 3, z: 0}
 --- !u!114 &1077213429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +857,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1925384988}
   - component: {fileID: 1925384987}
-  - component: {fileID: 1925384986}
+  - component: {fileID: 1925384989}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -865,26 +865,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1925384986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925384985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &1925384987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +895,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1925384989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925384985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_PointAction: {fileID: 6785206425144544714, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_MoveAction: {fileID: 5232306652759425367, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_SubmitAction: {fileID: 1298572031217645011, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_CancelAction: {fileID: 1347321430939120872, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_LeftClickAction: {fileID: 3189771666389212699, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_MiddleClickAction: {fileID: 2007235638852654391, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_RightClickAction: {fileID: -5575386110298981972, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_ScrollWheelAction: {fileID: 1506639535078783817, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 5479871285321252188, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -181024750104035470, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &1939165017
 GameObject:
   m_ObjectHideFlags: 0
