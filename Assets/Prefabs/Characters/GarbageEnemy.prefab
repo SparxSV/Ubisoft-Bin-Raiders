@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5268204521917623668}
   - component: {fileID: 7574989780986202028}
   - component: {fileID: 8556555681886085193}
+  - component: {fileID: 4087389323862726546}
+  - component: {fileID: 5876847103851666799}
   m_Layer: 9
   m_Name: GarbageEnemy
   m_TagString: Untagged
@@ -68,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9d8551c7d60314bac0158d656981e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 120
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -89,6 +90,33 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 7574989780986202028}
   player: {fileID: 0}
+--- !u!114 &4087389323862726546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085265611177868786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13928281a53b463fbb2950da1e8862e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+--- !u!136 &5876847103851666799
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085265611177868786}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.24866112
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0.0052569658}
 --- !u!1001 &522057896798545476
 PrefabInstance:
   m_ObjectHideFlags: 0
