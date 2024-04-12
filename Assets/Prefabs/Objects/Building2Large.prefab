@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4144974644219895196}
+  - component: {fileID: 8843527183938182263}
   m_Layer: 0
   m_Name: Building2Large
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8843527183938182263
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594238757362628934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 40.135788, y: 30.731297, z: 20.75127}
+  m_Center: {x: -10.013102, y: 14.865648, z: -9.875635}
 --- !u!1001 &2844403915857623860
 PrefabInstance:
   m_ObjectHideFlags: 0
