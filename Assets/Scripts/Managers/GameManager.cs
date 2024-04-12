@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public List<EnemyAI> enemies;
-
+    [SerializeField] private PlayerController player;
+    
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -16,11 +17,14 @@ public class GameManager : MonoBehaviour
             Instance = this;
     }
 
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerController>();
+    }
+
     private void Update()
     {
-        foreach(EnemyAI enemy in enemies)
-        {
-            
-        }
+        if(player.playerHealth <= 0)
+            SceneManager.LoadSceneAsync("Lose Scene");
     }
 }

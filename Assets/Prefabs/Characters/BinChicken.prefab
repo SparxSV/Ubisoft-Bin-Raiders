@@ -376,7 +376,6 @@ GameObject:
   m_Component:
   - component: {fileID: 378765731031615012}
   - component: {fileID: 6026249201749777502}
-  - component: {fileID: 7118349727148471252}
   m_Layer: 0
   m_Name: BinChicken
   m_TagString: Untagged
@@ -423,20 +422,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &7118349727148471252
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1011750535563009182}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.31
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1104209593608163923
 GameObject:
   m_ObjectHideFlags: 0

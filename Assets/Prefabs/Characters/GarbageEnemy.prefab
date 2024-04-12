@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5268204521917623668}
   - component: {fileID: 7574989780986202028}
   - component: {fileID: 8556555681886085193}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GarbageEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,22 +68,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9d8551c7d60314bac0158d656981e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 7574989780986202028}
+  health: 120
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
-  health: 120
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 0.5
+  timeBetweenAttacks: 2
+  angleOfProjectile: 4
+  forceOfProjectile: 8
   projectile: {fileID: 2196897129323935678, guid: 81b1eecc9f8ddbb418f5d115e8ebb7d1, type: 3}
+  projectileLife: 2
   sightRange: 13.4
   attackRange: 5.1
   playerInSightRange: 0
   playerInAttackRange: 0
+  currentState: 0
+  agent: {fileID: 7574989780986202028}
   player: {fileID: 0}
 --- !u!1001 &522057896798545476
 PrefabInstance:
@@ -139,6 +143,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 59d93fb9266b0a249aca01711c1b3743, type: 3}
       propertyPath: m_Name
       value: SK_GarbageEnemyBlockout
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 59d93fb9266b0a249aca01711c1b3743, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59d93fb9266b0a249aca01711c1b3743, type: 3}

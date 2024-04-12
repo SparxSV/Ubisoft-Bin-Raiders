@@ -75,6 +75,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1464914034494505887}
   - component: {fileID: 1527486333221948132}
+  - component: {fileID: 6660318904897291674}
   m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
@@ -115,6 +116,7 @@ MonoBehaviour:
   sphereCollider: {fileID: 2928320646621523557}
   gravity: {fileID: 5766416400267372723}
   animator: {fileID: 9143644128817146538}
+  playerHealth: 3
   movementSpeed:
     serializedVersion: 2
     m_Curve:
@@ -142,6 +144,10 @@ MonoBehaviour:
   turnSpeed: 200
   currentSpeed: 0
   jumpForce: 15
+  readyToJump: 0
+  jumpCooldown: 0
+  attackCooldown: 0
+  readyToAttack: 0
   glideStrength: 0
   dashForce: 12
   dashCooldown: 2
@@ -150,8 +156,23 @@ MonoBehaviour:
   jumpActionReference: {fileID: -3016222003342995615, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   glideActionReference: {fileID: 5483882392771179933, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
   dashActionReference: {fileID: 2293916498910788693, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
-  rayLength: 0.65
+  slashActionReference: {fileID: -1234596095759671091, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  rayLength: 0.6
   isGrounded: 0
+--- !u!136 &6660318904897291674
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6689371635915473571}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.31
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &9112344463364887770
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,6 +184,7 @@ GameObject:
   - component: {fileID: 9073435979898594145}
   - component: {fileID: 2928320646621523557}
   - component: {fileID: 8587883658675685611}
+  - component: {fileID: 8813603734780963530}
   - component: {fileID: 5766416400267372723}
   m_Layer: 6
   m_Name: Collider
@@ -215,6 +237,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &8813603734780963530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112344463364887770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae8176068914e468df3965a6781ed5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1527486333221948132}
 --- !u!114 &5766416400267372723
 MonoBehaviour:
   m_ObjectHideFlags: 0
