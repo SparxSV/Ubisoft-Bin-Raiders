@@ -36,11 +36,13 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField] private float timeBetweenAttacks;
 	[SerializeField] private float angleOfProjectile;
 	[SerializeField] private float forceOfProjectile;
+	
 	[SerializeField] private GameObject projectile;
+	[SerializeField] private float projectileLife;
 	
 	// States
 	[SerializeField] private float sightRange, attackRange;
-	[SerializeField] private bool playerInSightRange, playerInAttackRange;
+	[SerializeField, ReadOnly] private bool playerInSightRange, playerInAttackRange;
 
 	[Header("Debugging")]
 	[SerializeField, ReadOnly] private EnemyStates currentState;
@@ -53,14 +55,13 @@ public class EnemyAI : MonoBehaviour
 	private void Awake()
 	{
 		player = FindObjectOfType<PlayerController>().transform;
-		agent = GetComponent<NavMeshAgent>();
-
+		agent = GetComponent<NavMeshAgent>();	
 		gameObject.layer = 9;
 	}
 
 	private void Start()
 	{
-		GameManager.Instance.enemies.Add(this);
+		//GameManager.Instance.enemies.Add(this);
 	}
 
 	private void Update()
@@ -134,6 +135,7 @@ public class EnemyAI : MonoBehaviour
 
 			alreadyAttacked = true;
 			Invoke(nameof(ResetAttack), timeBetweenAttacks);
+			Destroy(rb.gameObject, projectileLife);
 		}
 	}
 

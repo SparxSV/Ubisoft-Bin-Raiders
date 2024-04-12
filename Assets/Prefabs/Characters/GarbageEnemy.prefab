@@ -77,10 +77,11 @@ MonoBehaviour:
     m_Bits: 64
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 0.5
-  angleOfProjectile: 0
-  forceOfProjectile: 0
+  timeBetweenAttacks: 2
+  angleOfProjectile: 4
+  forceOfProjectile: 8
   projectile: {fileID: 2196897129323935678, guid: 81b1eecc9f8ddbb418f5d115e8ebb7d1, type: 3}
+  projectileLife: 2
   sightRange: 13.4
   attackRange: 5.1
   playerInSightRange: 0
