@@ -82,7 +82,7 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   angleOfProjectile: 4
   forceOfProjectile: 8
-  projectile: {fileID: 2196897129323935678, guid: 81b1eecc9f8ddbb418f5d115e8ebb7d1, type: 3}
+  projectile: {fileID: 550576475244601314, guid: f1f9fc8b602a62f49b28b706cdb848f8, type: 3}
   projectileLife: 2
   sightRange: 13.4
   attackRange: 5.1
@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   deathEffect: {fileID: 0}
+  counter: {fileID: 0}
 --- !u!136 &5876847103851666799
 CapsuleCollider:
   m_ObjectHideFlags: 0
