@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_S_Outline
+  m_Name: M_Outline
   m_Shader: {fileID: -6465566751694194690, guid: 8a8c7fb13cb565d4ba4005b6c326f473, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
