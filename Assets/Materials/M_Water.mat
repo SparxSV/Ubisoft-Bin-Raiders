@@ -100,15 +100,15 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RippleDensity: 21.62
-    - _RippleSlimness: 5.94
+    - _RippleDensity: 72.91
+    - _RippleSlimness: 7.2
     - _RippleSpeed: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _WaveScale: 2
+    - _WaveScale: 60.59
     - _WaveSpeed: 0.1
     - _WorkflowMode: 1
     - _ZTest: 4
@@ -119,7 +119,7 @@ Material:
     - _BaseColour: {r: 0.100124575, g: 0.43815556, b: 0.8490566, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RippleColour: {r: 0.23495908, g: 0.70878786, b: 0.9056604, a: 0}
+    - _RippleColour: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1517414219684052667
