@@ -33,7 +33,10 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, ReadOnly] private bool readyToJump;
 	[SerializeField, Range(0, 10)] private float jumpCooldown;
 
-
+	[Header("Attack Controls")]
+	[SerializeField, Range(0, 10)] private float attackCooldown;
+	[SerializeField, ReadOnly] private bool readyToAttack;
+	
 	[Header("Glide Controls")]
 	[SerializeField, Range(0, 1)] private float glideStrength;
 
@@ -47,6 +50,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private InputActionReference jumpActionReference;
 	[SerializeField] private InputActionReference glideActionReference;
 	[SerializeField] private InputActionReference dashActionReference;
+	[SerializeField] private InputActionReference slashActionReference;
 	
 	[Header("Debugging")]
 	[SerializeField, Range(0.6f, 1)] private float rayLength;
@@ -59,6 +63,7 @@ public class PlayerController : MonoBehaviour
 	{
 		jumpActionReference.action.performed += Jump;
 		dashActionReference.action.performed += Dash;
+		slashActionReference.action.performed += SwordAttack;
 	}
 
 	private void Start()
@@ -151,6 +156,11 @@ public class PlayerController : MonoBehaviour
 			
 			Invoke(nameof(ResetJump), jumpCooldown);
 		}
+	}
+	
+	private void SwordAttack(InputAction.CallbackContext obj)
+	{
+		
 	}
 
 	private void ResetJump()
