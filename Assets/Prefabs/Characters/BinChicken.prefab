@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 6995823177281408334}
   - component: {fileID: 3197747320366436788}
   - component: {fileID: 531598020017014730}
+  - component: {fileID: 2473144625739295496}
   m_Layer: 0
   m_Name: TEMP_Sword
   m_TagString: Sword
@@ -316,6 +317,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.67052704}
   m_Center: {x: 0.000000795246, y: 0.0000004422729, z: -0.16473661}
+--- !u!114 &2473144625739295496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739111603335514787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6ac367995945efbbfc4903349192bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
 --- !u!1 &742592765352991149
 GameObject:
   m_ObjectHideFlags: 0

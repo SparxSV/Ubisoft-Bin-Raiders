@@ -1,4 +1,4 @@
-﻿using System;
+﻿using AI;
 
 using UnityEngine;
 
@@ -12,7 +12,8 @@ namespace Player
 		{
 			if(other.CompareTag("Enemy"))
 			{
-				
+				EnemyStats enemy = other.GetComponent<EnemyStats>();
+				enemy.TakeDamage(damage);
 			}
 		}
 	}
