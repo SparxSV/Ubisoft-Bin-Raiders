@@ -1,3 +1,5 @@
+using AI;
+
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -8,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private PlayerController player;
+    [SerializeField] private EnemyCounterUI counter;
     
     private void Awake()
     {
@@ -26,5 +29,8 @@ public class GameManager : MonoBehaviour
     {
         if(player.playerHealth <= 0)
             SceneManager.LoadSceneAsync("Lose Scene");
+
+        if(counter.enemyCounter <= 0)
+            SceneManager.LoadSceneAsync("Win Scene");
     }
 }
