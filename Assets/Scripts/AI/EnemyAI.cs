@@ -39,6 +39,9 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField, ReadOnly] private EnemyStates currentState;
 	[SerializeField, ReadOnly] private NavMeshAgent agent;
 	[SerializeField, ReadOnly] private Transform player;
+	[SerializeField, ReadOnly] 
+	
+	private Animator animator;
 
 	private bool walkPointSet;
 	private bool alreadyAttacked;
@@ -46,13 +49,11 @@ public class EnemyAI : MonoBehaviour
 	private void Awake()
 	{
 		player = FindObjectOfType<PlayerController>().transform;
-		agent = GetComponent<NavMeshAgent>();	
-		gameObject.layer = 9;
-	}
 
-	private void Start()
-	{
-		//GameManager.Instance.enemies.Add(this);
+		animator = GetComponent<Animator>();
+		agent = GetComponent<NavMeshAgent>();
+		
+		gameObject.layer = 9;
 	}
 
 	private void Update()
@@ -73,6 +74,8 @@ public class EnemyAI : MonoBehaviour
 
 	private void Patrolling()
 	{
+		animator.SetBool("Walking", true);
+		
 		currentState = EnemyStates.Patrolling;
 		
 		if(!walkPointSet) SearchWalkPoint();
@@ -101,6 +104,8 @@ public class EnemyAI : MonoBehaviour
 
 	private void ChasePlayer()
 	{
+		animator.SetBool("Walking", true);
+		
 		currentState = EnemyStates.Chasing;
 		
 		agent.SetDestination(player.position);
@@ -109,6 +114,8 @@ public class EnemyAI : MonoBehaviour
 	// ReSharper disable Unity.PerformanceAnalysis
 	private void AttackPlayer()
 	{
+		animator.SetTrigger("Throw");
+		
 		currentState = EnemyStates.Attacking;
 		
 		// Make sure enemy doesn't move
