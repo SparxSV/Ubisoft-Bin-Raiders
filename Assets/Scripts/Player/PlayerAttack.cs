@@ -9,6 +9,8 @@ namespace Player
 	{
 		[SerializeField] private Animator animator;
 		[SerializeField] private InputActionReference attackActionReference;
+
+		[SerializeField] private Collider weaponCollider;
 		
 		private PlayerController player;
 
@@ -20,6 +22,10 @@ namespace Player
 		{
 			animator.SetTrigger("Attack");
 		}
+
+		public void EnableWeaponCollider() => weaponCollider.enabled = true;
+
+		public void DisableWeaponCollider() => weaponCollider.enabled = false;
 
 		private void OnEnable() => attackActionReference.action.Enable();
 

@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 9143644128817146538}
   attackActionReference: {fileID: -1234596095759671091, guid: 6ab858a4888936248827b5418be2cee8, type: 3}
+  weaponCollider: {fileID: 0}
 --- !u!136 &6660318904897291674
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -330,6 +331,30 @@ PrefabInstance:
     - target: {fileID: 378765731031615012, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 531598020017014730, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7251611
+      objectReference: {fileID: 0}
+    - target: {fileID: 531598020017014730, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6163046
+      objectReference: {fileID: 0}
+    - target: {fileID: 531598020017014730, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
+      propertyPath: m_Size.z
+      value: 0.38227165
+      objectReference: {fileID: 0}
+    - target: {fileID: 531598020017014730, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
+      propertyPath: m_Center.x
+      value: -0.02663537
+      objectReference: {fileID: 0}
+    - target: {fileID: 531598020017014730, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
+      propertyPath: m_Center.y
+      value: 0.021964455
+      objectReference: {fileID: 0}
+    - target: {fileID: 531598020017014730, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
+      propertyPath: m_Center.z
+      value: -0.30886447
       objectReference: {fileID: 0}
     - target: {fileID: 572009359584713078, guid: bff43ef4b2a25bb4aab7cf4f87a1e32d, type: 3}
       propertyPath: m_Layer
