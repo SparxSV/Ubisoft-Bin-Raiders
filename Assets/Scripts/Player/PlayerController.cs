@@ -1,6 +1,10 @@
 using UnityEngine;
 using NaughtyAttributes;
 
+using System;
+
+using Unity.VisualScripting;
+
 using UnityEngine.InputSystem;
 
 public enum States
@@ -20,6 +24,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private CustomGravity gravity;
 	[SerializeField] private Animator animator;
 
+	[Header("Player Stats")] 
+	public int playerHealth = 3;
+	
 	[Header("Movement")] 
 	[SerializeField] private AnimationCurve movementSpeed;
 	[SerializeField] private float turnSpeed;
@@ -199,6 +206,15 @@ public class PlayerController : MonoBehaviour
 	
 #endregion
 
+	private void OnCollisionEnter(Collision other)
+	{
+		if(other.gameObject.layer == 8)
+		{
+			Destroy(other.gameObject);
+			playerHealth--;
+		}
+	}
+	
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
