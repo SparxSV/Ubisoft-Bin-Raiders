@@ -1,6 +1,8 @@
 using UnityEngine;
 using NaughtyAttributes;
 
+using UnityEditorInternal;
+
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 
@@ -28,6 +30,9 @@ public class PlayerController : MonoBehaviour
 	
 	[Header("Jump Controls")] 
 	[SerializeField, Range(5, 30)] private float jumpForce;
+	[SerializeField, ReadOnly] private bool readyToJump;
+	[SerializeField, Range(0, 10)] private float jumpCooldown;
+
 
 	[Header("Glide Controls")]
 	[SerializeField, Range(0, 1)] private float glideStrength;
@@ -48,11 +53,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField, ReadOnly] private bool isGrounded;
 
 	private Vector2 movement;
-	
-	private static readonly int forward = Animator.StringToHash("Forward");
-	private static readonly int sense = Animator.StringToHash("Sense");
-	private static readonly int turn = Animator.StringToHash("Turn");
-
 	private Quaternion normalPosition;
 
 	private void Awake()
@@ -66,11 +66,12 @@ public class PlayerController : MonoBehaviour
 		rigidBody.drag = 1;
 
 		readyToDash = true;
+		readyToJump = true;
 	}
 
 	private void Update()
 	{
-		transform.position = rigidBody.transform.position - new Vector3(0, /*-sphereCollider.radius*/0, 0);
+		transform.position = rigidBody.transform.position - new Vector3(0, /*-sphereCollider.radius*/0.25f, 0);
 		currentSpeed = rigidBody.velocity.magnitude;
 
 		movement = movementActionReference.action.ReadValue<Vector2>();
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
 	private void GroundCheck()
 	{
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, rayLength))
+        if (Physics.Raycast(sphereCollider.transform.position, Vector3.down, out RaycastHit hit, rayLength))
         {
             playerNormal.up = Vector3.Lerp(playerNormal.up, hit.normal, Time.deltaTime * 8.0f);
             playerNormal.Rotate(0, transform.eulerAngles.y, 0);
@@ -101,10 +102,13 @@ public class PlayerController : MonoBehaviour
 	
 	private void Animations()
 	{
-		animator.SetFloat(forward, Mathf.Abs(movement.y));
-		animator.SetFloat(sense, Mathf.Sign(movement.y));
+		animator.SetFloat("Forward", movement.y);
+		animator.SetFloat("Turn", movement.x);
 		
-		animator.SetFloat(turn, movement.x);
+		if(!isGrounded)
+			animator.SetBool("Grounded", true);
+		else
+			animator.SetBool("Grounded", false);
 	}
 
     #region Input Functions
@@ -115,8 +119,11 @@ public class PlayerController : MonoBehaviour
 
 		float speed = movementSpeed.Evaluate(movement.y);
 
-		if (isGrounded)
-			rigidBody.AddForce(transform.forward * (Time.deltaTime * speed * movement.y), ForceMode.Acceleration);
+		if(isGrounded)
+		{
+			Vector3 newForward = transform.forward * movement.y;
+			rigidBody.AddForce(newForward * (Time.deltaTime * speed), ForceMode.Acceleration);
+		}
 
 		else
 			rigidBody.AddForce(Vector3.zero * (Time.deltaTime * movement.y));
@@ -124,20 +131,31 @@ public class PlayerController : MonoBehaviour
 
 	private void Glide()
 	{
-		if (!isGrounded && glideActionReference.action.ReadValue<float>() > 0)
+		if(!isGrounded && glideActionReference.action.ReadValue<float>() > 0)
+		{
 			gravity.gravityScale = glideStrength;
-		
+		}
+
 		else
 			gravity.gravityScale = 1f;
 	}
 
 	private void Jump(InputAction.CallbackContext obj)
 	{
-		if(isGrounded)
+		if(isGrounded && readyToJump)
 		{
+			animator.SetTrigger("Jumping");
+			
 			rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
 			rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+			
+			Invoke(nameof(ResetJump), jumpCooldown);
 		}
+	}
+
+	private void ResetJump()
+	{
+		readyToJump = true;
 	}
 
     private void Dash(InputAction.CallbackContext obj)
@@ -177,7 +195,7 @@ public class PlayerController : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
-		Vector3 endPos = new (transform.position.x, transform.position.y - rayLength, transform.position.z);
-		Gizmos.DrawLine(transform.position, endPos);
+		Vector3 endPos = new (sphereCollider.transform.position.x, sphereCollider.transform.position.y - rayLength, sphereCollider.transform.position.z);
+		Gizmos.DrawLine(sphereCollider.transform.position, endPos);
 	}
 }
